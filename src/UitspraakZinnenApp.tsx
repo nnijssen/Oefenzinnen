@@ -47,6 +47,7 @@ const UitspraakZinnenApp = () => {
     }
     const utterance = new SpeechSynthesisUtterance(zin);
     utterance.lang = 'nl-NL';
+    utterance.rate = 0.8; // Langzamer spreken
     synth.speak(utterance);
   };
 
@@ -73,8 +74,8 @@ const UitspraakZinnenApp = () => {
       const transcript = event.results[0][0].transcript.toLowerCase().trim();
       const doel = zinnen[huidigeZinIndex].toLowerCase().trim();
       const score = transcript === doel ? 10 :
-                    transcript.includes(doel) || doel.includes(transcript) ? 6 + Math.floor(Math.random() * 3) :
-                    Math.floor(Math.random() * 5) + 1;
+                    transcript.includes(doel) || doel.includes(transcript) ? 4 + Math.floor(Math.random() * 2) :
+                    Math.floor(Math.random() * 3) + 1; // Strenger beoordelen
 
       const voldoende = score >= 6;
       setFeedback(`🎯 Herkend: "${transcript}" — ${voldoende ? `✅ Goed gedaan (${score}/10)` : `❌ Onvoldoende (${score}/10). Luister en probeer opnieuw.`}`);
