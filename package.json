@@ -1,6 +1,6 @@
 {
-  "name": "uitspraak-zinnen-voorlezen",
-  "version": "1.1.0",
+  "name": "uitspraak-zinnen-streng-langzaam",
+  "version": "1.2.0",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
