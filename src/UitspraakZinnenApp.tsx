@@ -40,6 +40,16 @@ const UitspraakZinnenApp = () => {
     }
   };
 
+  const spreekVoorbeeldZin = (zin) => {
+    const synth = window.speechSynthesis;
+    if (synth.speaking) {
+      synth.cancel();
+    }
+    const utterance = new SpeechSynthesisUtterance(zin);
+    utterance.lang = 'nl-NL';
+    synth.speak(utterance);
+  };
+
   const beoordeelUitspraak = async () => {
     if (!('webkitSpeechRecognition' in window)) {
       setFeedback('Spraakherkenning niet ondersteund in deze browser.');
@@ -67,7 +77,7 @@ const UitspraakZinnenApp = () => {
                     Math.floor(Math.random() * 5) + 1;
 
       const voldoende = score >= 6;
-      setFeedback(`🎯 Herkend: "${transcript}" — ${voldoende ? `✅ Goed gedaan (${score}/10)` : `❌ Onvoldoende (${score}/10). Probeer opnieuw.`}`);
+      setFeedback(`🎯 Herkend: "${transcript}" — ${voldoende ? `✅ Goed gedaan (${score}/10)` : `❌ Onvoldoende (${score}/10). Luister en probeer opnieuw.`}`);
       setHerkenningActief(false);
 
       recognition.stop();
@@ -76,6 +86,11 @@ const UitspraakZinnenApp = () => {
         setTimeout(() => {
           kiesNieuweZin();
         }, 1500);
+      } else {
+        spreekVoorbeeldZin(zinnen[huidigeZinIndex]);
+        setTimeout(() => {
+          beoordeelUitspraak();
+        }, 4000);
       }
     };
 
